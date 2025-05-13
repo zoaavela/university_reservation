@@ -5,21 +5,33 @@ require_once 'config.php';
 // Variable pour stocker les messages d'erreur
 $message_erreur = '';
 
+// Si l'utilisateur est déjà connecté, le rediriger
+if (est_connecte()) {
+    // Rediriger selon le rôle
+    if ($_SESSION["role"] === "etudiant") {
+        header("location: etudiant/index.php");
+    } else if ($_SESSION["role"] === "admin") {
+        header("location: admin/index.php");
+    } else {
+        header("location: index.php");
+    }
+    exit;
+}
+
 // Vérifier si le formulaire a été soumis
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Récupérer et nettoyer les données du formulaire
-    $email = nettoyer_donnees($_POST["email"]);
-    $mot_de_passe = $_POST["password"]; // Le mot de passe n'est pas nettoyé car il sera haché
+    // Récupérer les données du formulaire
+    $email = nettoyer($_POST["email"]);
+    $mot_de_passe = $_POST["password"]; // Pas besoin de nettoyer le mot de passe
     
     // Vérifier si les champs sont vides
     if (empty($email) || empty($mot_de_passe)) {
         $message_erreur = "Veuillez remplir tous les champs.";
     } else {
-        // Requête pour vérifier si l'utilisateur existe
+        // Vérifier si l'utilisateur existe
         $sql = "SELECT * FROM utilisateur WHERE email = '$email'";
         $resultat = mysqli_query($conn, $sql);
         
-        // Vérifier si l'utilisateur existe
         if (mysqli_num_rows($resultat) == 1) {
             $utilisateur = mysqli_fetch_assoc($resultat);
             
@@ -31,20 +43,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $_SESSION["nom"] = $utilisateur["nom"];
                 $_SESSION["prenom"] = $utilisateur["prenom"];
                 $_SESSION["role"] = $utilisateur["role"];
+                $_SESSION["email"] = $utilisateur["email"];
                 
-                // Rediriger vers la page d'accueil selon le rôle
-                if ($utilisateur["role"] == "etudiant") {
-                    header("location: etudiant_accueil.php");
-                } else if ($utilisateur["role"] == "enseignant") {
-                    header("location: enseignant_accueil.php");
-                } else if ($utilisateur["role"] == "admin") {
-                    header("location: admin_accueil.php");
-                } else if ($utilisateur["role"] == "agent") {
-                    header("location: agent_accueil.php");
+                // Rediriger selon le rôle
+                if ($_SESSION["role"] === "etudiant") {
+                    header("location: etudiant/index.php");
+                } else if ($_SESSION["role"] === "admin") {
+                    header("location: admin/index.php");
                 } else {
-                    $message_erreur = "Rôle non reconnu.";
+                    header("location: index.php");
                 }
-                exit();
+                exit;
             } else {
                 $message_erreur = "Mot de passe incorrect.";
             }
@@ -58,31 +67,43 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Connexion - Système de Réservation</title>
+    <title>Connexion - Système de Réservation MMI</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Inclure Bootstrap pour un style simple mais efficace -->
+    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Font Awesome pour les icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
-        .formulaire-connexion {
-            max-width: 400px;
-            margin: 0 auto;
-            margin-top: 50px;
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            background-color: #f9f9f9;
+        body {
+            background-color: #f8f9fa;
         }
-        .titre {
+        .login-form {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .logo {
             text-align: center;
             margin-bottom: 20px;
+        }
+        .logo i {
+            font-size: 50px;
+            color: #007bff;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="formulaire-connexion">
-            <h2 class="titre">Connexion</h2>
+        <div class="login-form">
+            <div class="logo">
+                <i class="fas fa-university"></i>
+            </div>
+            <h2 class="text-center mb-4">Connexion</h2>
+            <h5 class="text-center mb-4">Système de Réservation MMI</h5>
             
             <!-- Afficher les messages d'erreur -->
             <?php if (!empty($message_erreur)): ?>
@@ -92,19 +113,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <!-- Formulaire de connexion -->
             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                 <div class="form-group">
-                    <label>Email:</label>
+                    <label><i class="fas fa-envelope"></i> Email:</label>
                     <input type="email" name="email" class="form-control" required>
                 </div>
                 <div class="form-group">
-                    <label>Mot de passe:</label>
+                    <label><i class="fas fa-lock"></i> Mot de passe:</label>
                     <input type="password" name="password" class="form-control" required>
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-block">Se connecter</button>
+                    <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-sign-in-alt"></i> Se connecter</button>
                 </div>
                 <p class="text-center">Pas encore de compte? <a href="signup.php">S'inscrire</a></p>
             </form>
         </div>
+        <div class="text-center mt-3">
+            <p class="text-muted">© <?php echo date("Y"); ?> Système de Réservation MMI</p>
+        </div>
     </div>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

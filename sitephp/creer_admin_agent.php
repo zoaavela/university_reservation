@@ -27,10 +27,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     else {
         // Vérifier si l'email existe déjà
-        $sql = "SELECT id FROM utilisateur WHERE email = '$email'";
-        $resultat = mysqli_query($conn, $sql);
+        $sql = "SELECT id FROM utilisateur WHERE email = ?";
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, "s", $email);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_store_result($stmt);
         
-        if (mysqli_num_rows($resultat) > 0) {
+        if (mysqli_stmt_num_rows($stmt) > 0) {
             $message = "<div class='alert alert-danger'>Cet email est déjà utilisé.</div>";
         } else {
             // Hacher le mot de passe
@@ -38,9 +41,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
             // Insérer l'utilisateur dans la base de données
             $sql = "INSERT INTO utilisateur (nom, prenom, email, mot_de_passe, role) 
-                    VALUES ('$nom', '$prenom', '$email', '$mot_de_passe_hache', '$role')";
+                    VALUES (?, ?, ?, ?, ?)";
+            $stmt = mysqli_prepare($conn, $sql);
+            mysqli_stmt_bind_param($stmt, "sssss", $nom, $prenom, $email, $mot_de_passe_hache, $role);
             
-            if (mysqli_query($conn, $sql)) {
+            if (mysqli_stmt_execute($stmt)) {
                 $message = "<div class='alert alert-success'>Compte $role créé avec succès!</div>";
             } else {
                 $message = "<div class='alert alert-danger'>Erreur: " . mysqli_error($conn) . "</div>";
@@ -53,12 +58,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Créer Admin/Agent - Système de Réservation</title>
+    <title>Créer Admin/Agent - Système de Réservation Universitaire</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Inclure Bootstrap pour un style simple mais efficace -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
+        body {
+            background-color: #f8f9fa;
+        }
         .formulaire-creation {
             max-width: 500px;
             margin: 0 auto;
@@ -66,11 +75,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             padding: 20px;
             border: 1px solid #ddd;
             border-radius: 5px;
-            background-color: #f9f9f9;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         .titre {
             text-align: center;
             margin-bottom: 20px;
+            color: #343a40;
         }
         .alerte {
             margin-top: 20px;
@@ -80,11 +91,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             border-radius: 5px;
             text-align: center;
         }
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .logo i {
+            font-size: 50px;
+            color: #dc3545;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="formulaire-creation">
+            <div class="logo">
+                <i class="fas fa-user-shield"></i>
+            </div>
             <h2 class="titre">Créer un compte Admin/Agent</h2>
             <div class="alerte">
                 <strong>Attention!</strong> Cette page est réservée à la création de comptes administrateur et agent.
@@ -96,23 +118,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <!-- Formulaire de création -->
             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                 <div class="form-group">
-                    <label>Nom:</label>
+                    <label><i class="fas fa-user"></i> Nom:</label>
                     <input type="text" name="nom" class="form-control" required>
                 </div>
                 <div class="form-group">
-                    <label>Prénom:</label>
+                    <label><i class="fas fa-user"></i> Prénom:</label>
                     <input type="text" name="prenom" class="form-control" required>
                 </div>
                 <div class="form-group">
-                    <label>Email:</label>
+                    <label><i class="fas fa-envelope"></i> Email:</label>
                     <input type="email" name="email" class="form-control" required>
                 </div>
                 <div class="form-group">
-                    <label>Mot de passe:</label>
+                    <label><i class="fas fa-lock"></i> Mot de passe:</label>
                     <input type="password" name="password" class="form-control" required>
                 </div>
                 <div class="form-group">
-                    <label>Rôle:</label>
+                    <label><i class="fas fa-user-tag"></i> Rôle:</label>
                     <select name="role" class="form-control" required>
                         <option value="">Sélectionnez un rôle</option>
                         <option value="admin">Administrateur</option>
@@ -120,7 +142,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </select>
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-block">Créer le compte</button>
+                    <button type="submit" class="btn btn-danger btn-block"><i class="fas fa-user-plus"></i> Créer le compte</button>
                 </div>
             </form>
             
@@ -128,6 +150,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <a href="login.php">Retour à la page de connexion</a>
             </p>
         </div>
+        <div class="text-center mt-3">
+            <p class="text-muted">© <?php echo date("Y"); ?> Système de Réservation Universitaire</p>
+        </div>
     </div>
+    
+    <!-- Scripts JavaScript de Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
