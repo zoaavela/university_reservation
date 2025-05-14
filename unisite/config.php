@@ -61,8 +61,6 @@ function nettoyer($donnee) {
  * 
  * @return bool Vrai si l'utilisateur est connecté, faux sinon
  */
-
-// Fonction pour vérifier si l'utilisateur est connecté
 function est_connecte() {
     return isset($_SESSION["connecte"]) && $_SESSION["connecte"] === true;
 }

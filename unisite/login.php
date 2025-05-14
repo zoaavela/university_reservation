@@ -12,6 +12,8 @@ if (est_connecte()) {
         header("location: etudiant/index.php");
     } else if ($_SESSION["role"] === "admin") {
         header("location: admin/index.php");
+    } else if ($_SESSION["role"] === "agent") {
+        header("location: agent/index.php");
     } else {
         header("location: index.php");
     }
@@ -50,6 +52,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     header("location: etudiant/index.php");
                 } else if ($_SESSION["role"] === "admin") {
                     header("location: admin/index.php");
+                } else if ($_SESSION["role"] === "agent") {
+                    header("location: agent/index.php");
                 } else {
                     header("location: index.php");
                 }
@@ -62,48 +66,56 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 }
+
+// Définir le titre de la page
+$page_title = "Connexion - Université Gustave Eiffel";
+$page = "login";
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-    <title>Connexion - Système de Réservation MMI</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?php echo $page_title; ?></title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- Font Awesome pour les icônes -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <style>
-        body {
-            background-color: #f8f9fa;
-        }
-        .login-form {
-            max-width: 400px;
-            margin: 50px auto;
-            padding: 20px;
-            background-color: white;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        .logo {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .logo i {
-            font-size: 50px;
-            color: #007bff;
-        }
-    </style>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Styles personnalisés -->
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <!-- Barre de navigation simple -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <a class="navbar-brand" href="index.php">
+                <img src="images/logo.png" alt="Université Gustave Eiffel">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="login.php">Connexion</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="signup.php">Inscription</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
     <div class="container">
-        <div class="login-form">
-            <div class="logo">
-                <i class="fas fa-university"></i>
+        <div class="auth-container">
+            <div class="auth-logo">
+                <img src="images/logo.png" alt="Université Gustave Eiffel">
             </div>
             <h2 class="text-center mb-4">Connexion</h2>
-            <h5 class="text-center mb-4">Système de Réservation MMI</h5>
             
             <!-- Afficher les messages d'erreur -->
             <?php if (!empty($message_erreur)): ?>
@@ -126,10 +138,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <p class="text-center">Pas encore de compte? <a href="signup.php">S'inscrire</a></p>
             </form>
         </div>
-        <div class="text-center mt-3">
-            <p class="text-muted">© <?php echo date("Y"); ?> Système de Réservation MMI</p>
-        </div>
     </div>
+    
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Université Gustave Eiffel</h5>
+                    <p>Système de réservation de salles et de matériel</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Liens utiles</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white">Aide</a></li>
+                        <li><a href="#" class="text-white">Conditions d'utilisation</a></li>
+                        <li><a href="#" class="text-white">Politique de confidentialité</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Contact</h5>
+                    <address>
+                        <p><i class="fas fa-map-marker-alt mr-2"></i> 5 Boulevard Descartes, 77420 Champs-sur-Marne</p>
+                        <p><i class="fas fa-phone mr-2"></i> +33 1 60 95 75 00</p>
+                        <p><i class="fas fa-envelope mr-2"></i> contact@univ-eiffel.fr</p>
+                    </address>
+                </div>
+            </div>
+            <hr class="bg-light">
+            <div class="text-center">
+                <p>© <?php echo date("Y"); ?> Université Gustave Eiffel - Tous droits réservés</p>
+            </div>
+        </div>
+    </footer>
     
     <!-- Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
