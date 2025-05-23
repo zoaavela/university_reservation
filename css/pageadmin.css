@@ -1,0 +1,159 @@
+.navbar{
+    background: linear-gradient(to bottom right, #e0e0ff, #ffffff);
+    color: black;
+    position: sticky;
+    height: 75px;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar img{
+    width: 200px;
+}
+
+a:not(.navbar-brand) {
+  display: inline-block;
+  transition: transform 0.3s ease;
+  color: inherit;
+  text-decoration: none;
+}
+
+a:not(.navbar-brand):hover {
+  transform: scale(1.1);
+  color: black;
+}
+
+.nav-item{
+    margin-left: 20px;
+}
+
+ .welcome-card{
+    background: linear-gradient(to right, #007bff, #00c6ff) border-box;
+    color: white;
+    border-radius: 40px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.stat-card{
+    text-align: center;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.stat-card-1{
+    background: linear-gradient(to bottom right, #e0e0ff, #ffffff);
+    text-align: center;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.stat-card-2{
+    background: linear-gradient(to bottom right, #e0e0ff, #ffffff);
+    text-align: center;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.stat-card-3{
+    background: linear-gradient(to bottom right, #e0e0ff, #ffffff);
+    text-align: center;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.stat-card-4{
+    background: linear-gradient(to bottom right, #e0e0ff, #ffffff);
+    text-align: center;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.card-header{
+    background: linear-gradient(to right, #007bff, #00c6ff) border-box;
+}
+
+.gradient-border-btn{
+    display: inline-block;
+    padding: 10px 20px;
+    color: #fff;
+    font-weight: bold;
+    background: linear-gradient(white, white), 
+                linear-gradient(to right, #007bff, #00c6ff) border-box;
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+    border: 4px solid transparent;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.gradient-border-btn:hover {
+    color: black;
+    background: linear-gradient(#f8f9fa, #f8f9fa), 
+                linear-gradient(to right, #007bff, #00c6ff) border-box;
+}
+
+.card .btn {
+    display: inline-block;
+    color: #007bff; /* Texte visible dès le début */
+    background: linear-gradient(to right, #ffffff, #ffffff) padding-box,
+                linear-gradient(to right, #007bff, #00c6ff) border-box;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    padding: 10px 15px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.card .btn:hover {
+    color: white;
+    background: linear-gradient(to right, #007bff, #00c6ff) border-box;
+}
+
+.alert{
+    background: linear-gradient(to bottom right, #e0e0ff, #ffffff);
+}
+
+.footer{
+    background: linear-gradient(to bottom right, #e0e0ff, #ffffff);
+}
+
+i{
+    font-family: poppins;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+.page-header{
+    background: linear-gradient(to right, #007bff, #00c6ff) border-box;
+    color: white;
+    border-radius: 40px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.btn-ajout{
+    width: 300px;
+}
+
+.fond{
+    background: linear-gradient(to bottom right, #e0e0ff, #ffffff);
+}
+
+.content{
+    margin-left: 225px;
+    padding: 20px;
+}
+
+
+
+
+
+
+
