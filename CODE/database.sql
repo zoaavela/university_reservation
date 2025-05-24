@@ -113,20 +113,16 @@ INSERT INTO `utilisateur` (`nom`, `prenom`, `email`, `mot_de_passe`, `role`) VAL
 
 -- Quelques matériels
 INSERT INTO `materiel` (`nom`, `description`, `categorie`, `quantite`, `disponible`, `image`) VALUES
-('Appareil photo Canon EOS 80D', 'Appareil photo reflex numérique avec objectif 18-55mm', 'Photo', 5, 1, 'canon_eos.jpg'),
-('Caméra Sony HXR-NX100', 'Caméra professionnelle Full HD', 'Vidéo', 3, 1, 'sony_hxr.jpg'),
-('Microphone Rode NTG-3', 'Microphone directionnel pour enregistrement audio', 'Audio', 4, 1, 'rode_ntg3.jpg'),
-('Trépied Manfrotto', 'Trépied professionnel pour appareil photo et caméra', 'Photo', 8, 1, 'trepied.jpg'),
-('Tablette graphique Wacom Intuos Pro', 'Tablette graphique pour designers', 'Design', 6, 1, 'wacom.jpg'),
-('Enregistreur Zoom H4n', 'Enregistreur audio portable 4 pistes', 'Audio', 5, 1, 'zoom_h4n.jpg'),
-('MacBook Pro 16"', 'Ordinateur portable Apple pour montage vidéo et design', 'Informatique', 10, 1, 'macbook.jpg'),
-('Steadicam', 'Stabilisateur pour caméra', 'Vidéo', 2, 1, 'steadicam.jpg');
+('Micro HyperX QuadCast', 'Microphone USB de qualité studio avec filtre anti-pop intégré.', 'Audio', 1, 1, 'canon_eos.jpg'),
+('Casque VR Oculus Quest 2', 'Casque de réalité virtuelle autonome, version vue de face.', 'Vidéo', 1, 1, 'sony_hxr.jpg'),
+('GoPro Max 360', 'Caméra GoPro Max avec enregistrement vidéo à 360°.', 'Vidéo', 4, 1, 'rode_ntg3.jpg'),
+('Caméra 360 Ricoh Theta', 'Caméra 360 placée dans son socle de recharge/protection.', 'Photo', 8, 1, 'trepied.jpg'),
+('Trépied photo pro', 'Trépied de photographie robuste, avec tête ajustable.', 'Design', 6, 1, 'wacom.jpg'),
+('Drone Tello Ryze', 'Mini drone programmable', 'Vidéo', 5, 1, 'zoom_h4n.jpg'),
+('Casque VR Oculus Quest 2"', 'Casque Oculus Quest 2 avec ses deux manettes', 'Informatique', 10, 1, 'macbook.jpg'),
+('Casque audio sans-fil Logitech G Pro X', 'Casque audio sans-fil avec micro amovible, conçu pour le gaming.', 'Son', 2, 1, 'steadicam.jpg');
 
 -- Quelques salles
 INSERT INTO `salle` (`nom`, `description`, `batiment`, `etage`, `capacite`, `equipements`, `disponible`, `image`) VALUES
-('Studio Photo', 'Studio photo équipé pour les shootings professionnels', 'Bâtiment A', '1', 15, 'Fond vert, éclairages, réflecteurs', 1, 'studio_photo.jpg'),
-('Salle Informatique 101', 'Salle équipée de 20 postes Mac pour le design et le développement', 'Bâtiment B', '1', 20, '20 iMac, vidéoprojecteur, tableau blanc', 1, 'salle_info.jpg'),
-('Studio Son', 'Studio d\'enregistrement audio professionnel', 'Bâtiment A', '2', 8, 'Console de mixage, microphones, cabine d\'enregistrement', 1, 'studio_son.jpg'),
-('Salle de Montage', 'Salle dédiée au montage vidéo et audio', 'Bâtiment C', '1', 12, '12 postes de montage, logiciels Adobe', 1, 'salle_montage.jpg'),
-('Amphithéâtre MMI', 'Grand amphithéâtre pour les cours magistraux', 'Bâtiment Principal', '0', 120, 'Système de sonorisation, vidéoprojecteur, écran géant', 1, 'amphi.jpg'),
-('Salle de Réunion', 'Salle pour les réunions et travaux de groupe', 'Bâtiment B', '2', 10, 'Table de conférence, écran, tableau blanc', 1, 'salle_reunion.jpg');
+('Salle 138 ', 'Studio photo équipé pour les shootings professionnels', 'Bâtiment A', '1', 15, 'Fond vert, éclairages, réflecteurs', 1, 'studio_photo.jpg'),
+('Salle 212', 'Salle équipée de 20 postes Mac pour le design et le développement', 'Bâtiment B', '1', 20, '20 iMac, vidéoprojecteur, tableau blanc', 1, 'salle_info.jpg'),
